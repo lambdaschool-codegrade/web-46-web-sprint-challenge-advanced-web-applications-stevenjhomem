@@ -10,7 +10,7 @@ import axiosWithAuth from "./helpers/axiosWithAuth";
 
 const handleLogout = () => {
   axiosWithAuth()
-    .post("logout")
+    .post('/logout')
     .then(()=>{
       localStorage.removeItem('token');
     });
@@ -25,7 +25,7 @@ function App() {
           <a data-testid="logoutButton" onClick={handleLogout} href='/'>logout</a>
         </header>
         <Route exact path='/' component={Login}></Route>
-        <PrivateRoute path='bubblepage' component={BubblePage}></PrivateRoute>
+        <PrivateRoute path='/bubblepage' component={BubblePage}></PrivateRoute>
       </div>
     </Router>
   );
