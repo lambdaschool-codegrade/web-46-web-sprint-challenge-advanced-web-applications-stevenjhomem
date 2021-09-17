@@ -1,16 +1,39 @@
 import React, {useState} from "react";
+import axiosWithAuth from "../helpers/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
 
-  const [formValues, setFormValues]=useState({
+  const {push} = useHistory();
+
+  const [credentials, setCredentials]=useState({
     username: "",
     password: "",
   })
-  // make a post request to retrieve a token from the api
-  // when you have handled the token, navigate to the BubblePage route
 
-  const error = "";
-  //replace with error state
+  const [error, setError] = useState("");
+
+  const handleChanges = (e)=>{
+    setCredentials({
+      ...credentials,
+      [e.target.name]:e.target.value,
+    })
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    axiosWithAuth().post('/login', credentials)
+                   .then(res => {
+                     localStorage.setItem('token',res.data.payload);
+                     setError("");
+                     push('/bubblepage');
+                   })
+                   .catch(err => {
+                    if (err.response.status === 403) {
+                      setError("Username or Password not valid.");
+                    }
+                   })
+  }
 
   return (
     <div className='login-form'>
@@ -22,7 +45,7 @@ const Login = () => {
             id="username"
             name="username"
             type="text"
-            value={formValues.username}
+            value={credentials.username}
             onChange={handleChanges}
           />
         
@@ -31,7 +54,7 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
-            value={formValues.password}
+            value={credentials.password}
             onChange={handleChanges}
           />
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axiosWithAuth from "../helpers/axiosWithAuth";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
@@ -17,6 +18,16 @@ const BubblePage = () => {
 
   const deleteColor = (colorToDelete) => {
   };
+
+  useEffect(()=>{
+    axiosWithAuth().get('/colors', colors)
+                   .then(res=>{
+                     console.log(res)
+                   })
+                   .catch(err=>{
+                     console.log(err)
+                   })
+  },[]);
 
   return (
     <div className="container">
