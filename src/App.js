@@ -13,6 +13,7 @@ const handleLogout = () => {
     .post('/logout')
     .then(()=>{
       localStorage.removeItem('token');
+      window.location.href = '/';
     });
 }
 
@@ -22,7 +23,7 @@ function App() {
       <div className="App">
         <header>
           Color Picker Sprint Challenge
-          <a data-testid="logoutButton" onClick={handleLogout} href='/'>logout</a>
+          <a data-testid="logoutButton" onClick={handleLogout} href="#">logout</a>
         </header>
         <Route exact path='/' component={Login}></Route>
         <PrivateRoute path='/bubblepage' component={BubblePage}></PrivateRoute>
