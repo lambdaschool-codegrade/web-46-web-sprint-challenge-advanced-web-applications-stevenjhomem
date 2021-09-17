@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 
 const Login = () => {
+
+  const [formValues, setFormValues]=useState({
+    username: "",
+    password: "",
+  })
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
@@ -8,13 +13,33 @@ const Login = () => {
   //replace with error state
 
   return (
-    <div>
+    <div className='login-form'>
       <h1>Welcome to the Bubble App!</h1>
       <div data-testid="loginForm" className="login-form">
-        <h2>Build login form here</h2>
-      </div>
+        <form onSubmit={handleLogin}>
+          <label htmlFor="username">username:</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value={formValues.username}
+            onChange={handleChanges}
+          />
+        
+          <label htmlFor="password">password:</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={formValues.password}
+            onChange={handleChanges}
+          />
 
-      <p id="error" className="error">{error}</p>
+          <p id="error" className="error">{error}</p>
+
+          <button id="submit" className="button">Login</button>
+        </form>
+      </div>
     </div>
   );
 };
